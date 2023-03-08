@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CCB.Core
+namespace CCB.Utility
 {
     public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     {
