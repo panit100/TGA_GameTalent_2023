@@ -1,32 +1,90 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CCB;
+using CCB.Player;
+using UnityEngine.AI;
 
 namespace CCB.Enemy
 {
     enum EnemyType
     {
-
+        Melee,
+        Range,
     }
 
-    public class BaseEnemy : MonoBehaviour
+    public class BaseEnemy : MonoBehaviour, IDamageable
     {
-        [SerializeField] float hp;
+        [SerializeField] EnemyType enemyType;
+        [SerializeField] float healthPoint;
         [SerializeField] float damage;
         [SerializeField] float speed;
+
+        [SerializeField] float attackRange;
+        [SerializeField] float visionRange;
+
+        //TODO: Implement state mechine later (AISTATE)
+
+        [SerializeField] EnemySkillConfig enemySkill;
+
+        NavMeshAgent navMeshAgent;
         
 
-        // Start is called before the first frame update
         void Start()
         {
-            
+            navMeshAgent = GetComponent<NavMeshAgent>();
+
+            navMeshAgent.stoppingDistance = attackRange;
         }
 
-        // Update is called once per frame
-        void Update()
+        void FixedUpdate()
         {
+            SetAIDistination();
+        }
+
+        void SetAIDistination()
+        {
+            if(IsPlayerInTriggerArea())
+                navMeshAgent.SetDestination(PlayerManager.Instance.transform.position);
+        }
+
+        bool IsPlayerInTriggerArea()
+        {
+            var overlapCollider = Physics.OverlapSphere(transform.position, visionRange);
+
+            foreach(var collider in overlapCollider)
+            {
+                if (collider.TryGetComponent<PlayerManager>(out var player))
+                {
+                    navMeshAgent.speed = speed;
+                    return true;
+                }
+            }
+
+            navMeshAgent.speed = 0;
+            return false;
             
         }
-}
 
+        public void ProcessDamage(float damage)
+        {
+            healthPoint -= damage;
+            if(healthPoint <= 0)
+                OnDie();
+        }
+
+        void OnDie()
+        {
+
+        }
+
+        void OnDrawGizmos() 
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(transform.position,visionRange);
+
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position,attackRange);
+        }
+    }
 }

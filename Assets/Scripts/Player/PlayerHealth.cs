@@ -5,20 +5,20 @@ using UnityEngine;
 
 namespace CCB.Player
 {
-    public class PlayerHealth : MonoBehaviour
+    public class PlayerHealth : MonoBehaviour, IDamageable
     {
-        [SerializeField] float hp;
+        [SerializeField] float healthPoint;
 
-        void CalculateDamage(float Damage)
+        public void ProcessDamage(float damage)
         {
-            hp -= Damage;
-            if(hp <= 0)
+            healthPoint -= damage;
+            if(healthPoint <= 0)
                 OnDie();
         }
 
-        private void OnDie()
+        void OnDie()
         {
-            Destroy(this.gameObject);
+
         }
     }
 }
