@@ -14,10 +14,23 @@ namespace CCB.Player
 
         void FixedUpdate()
         {
+            LookAtMouse();
+            
             OnMove();
             OnDash();
             OnShoot();
             OnActiveSkill();
+        }
+
+        void LookAtMouse()
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if(Physics.Raycast(ray,out RaycastHit hit))
+            {
+                float angle = Mathf.Atan2(hit.point.z,hit.point.x) * Mathf.Rad2Deg - 90f;
+                Debug.Log("angle " + angle);
+                transform.rotation = new Quaternion(0,angle,0,0);
+            }
         }
 
         void OnMove()

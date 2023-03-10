@@ -11,6 +11,8 @@ namespace CCB.Player
 
     public class PlayerSkill : MonoBehaviour
     {
+        [SerializeField] PlayerSkillConfig skillConfig;
+
         void Start()
         {
             PlayerManager.Instance.PlayerController.onActiveSkill += ActiveSkill;
