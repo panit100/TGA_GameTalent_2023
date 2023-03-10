@@ -16,7 +16,6 @@ namespace CCB.Gameplay
     public class TimeManager : Singleton<TimeManager>
     {
         [SerializeField] TimeState currentTimeState;
-        float time = 0;
 
         protected override void InitAfterAwake()
         {
@@ -35,16 +34,12 @@ namespace CCB.Gameplay
             switch(currentTimeState)
             {
                 case TimeState.Normal:
-                    time = NormalTime();
                     break;
                 case TimeState.Accelerate:
-                    time = AccelerateTime();
                     break;
                 case TimeState.Slow:
-                    time = SlowTime();
                     break;
                 case TimeState.Stop:
-                    time = StopTime();
                     break;
             }
         }
@@ -71,6 +66,24 @@ namespace CCB.Gameplay
 
         public float GetTime()
         {
+            var time = 1f;
+
+            switch(currentTimeState)
+            {
+                case TimeState.Normal:
+                    time = NormalTime();
+                    break;
+                case TimeState.Accelerate:
+                    time = AccelerateTime();
+                    break;
+                case TimeState.Slow:
+                    time = SlowTime();
+                    break;
+                case TimeState.Stop:
+                    time = StopTime();
+                    break;
+            }
+
             return time;
         }
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CCB.Gameplay;
 
 namespace CCB.Player
 {
@@ -23,7 +24,7 @@ namespace CCB.Player
 
         void Move(Vector3 direction)
         {
-            rigidbody.velocity = direction * speed;
+            rigidbody.velocity = direction * speed * (TimeManager.Instance.GetTimeState() == TimeState.Slow ? TimeManager.Instance.GetTime() : 1);
         }
 
         void Dash()

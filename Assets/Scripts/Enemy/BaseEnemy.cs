@@ -4,6 +4,7 @@ using UnityEngine;
 using CCB;
 using CCB.Player;
 using UnityEngine.AI;
+using CCB.Gameplay;
 
 namespace CCB.Enemy
 {
@@ -56,7 +57,7 @@ namespace CCB.Enemy
             {
                 if (collider.TryGetComponent<PlayerManager>(out var player))
                 {
-                    navMeshAgent.speed = speed;
+                    navMeshAgent.speed = speed * (TimeManager.Instance.GetTimeState() == TimeState.Slow ? TimeManager.Instance.GetTime() : 1);
                     return true;
                 }
             }

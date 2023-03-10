@@ -354,7 +354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7541847b73d47b74aa93c87d69524418, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 10
 --- !u!114 &10281852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1695,6 +1695,9 @@ MonoBehaviour:
   speed: 10
   attackRange: 3.17
   visionRange: 8.02
+  enemySkill:
+    onAttackSkill: {fileID: 0}
+    onDieSkill: {fileID: 0}
 --- !u!1 &1290455853
 GameObject:
   m_ObjectHideFlags: 0
