@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using System.Linq;
 using System;
+using CCB.Player;
 
 [RequireComponent(typeof(Rigidbody))]
 public class EnemyController : MonoBehaviour
