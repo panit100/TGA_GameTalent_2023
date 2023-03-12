@@ -24,13 +24,25 @@ namespace CCB.Player
 
         void LookAtMouse()
         {
+            Vector3 tempdirection = Vector3.zero;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if(Physics.Raycast(ray,out RaycastHit hit))
             {
-                float angle = Mathf.Atan2(hit.point.z,hit.point.x) * Mathf.Rad2Deg - 90f;
-                Debug.Log("angle " + angle);
-                transform.rotation = new Quaternion(0,angle,0,0);
+                //float angle = Mathf.Atan2(hit.point.z,hit.point.x) * Mathf.Rad2Deg - 90f;
+                 tempdirection = hit.point- transform.position;
             }
+            else
+            {
+                tempdirection = Vector3.zero;
+            }
+            tempdirection.y = 0f;
+            transform.forward = tempdirection;
+        }
+
+        private void OnDrawGizmos()
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Gizmos.DrawRay(ray);
         }
 
         void OnMove()
