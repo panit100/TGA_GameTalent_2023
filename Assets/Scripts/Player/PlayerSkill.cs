@@ -7,6 +7,7 @@ namespace CCB.Player
     public enum SkillType
     {
         BrokeAlarm,
+        FastForward
     }
 
     public class PlayerSkill : MonoBehaviour

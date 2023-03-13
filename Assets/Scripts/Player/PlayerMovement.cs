@@ -34,6 +34,19 @@ namespace CCB.Player
             Debug.Log("Dash!!!");
         }
 
+        public void OnFastForwardActivated(float duration) 
+        {
+            timeState = TimeState.Accelerate;
+            StartCoroutine(OnTimeToState(duration, TimeState.Normal));
+        }
+
+        IEnumerator OnTimeToState(float time, TimeState newTimeState)
+        {
+            yield return new WaitForSeconds(time);
+
+            timeState = newTimeState;
+        }
+
         void OnDestroy() 
         {
             PlayerManager.Instance.PlayerController.onMove -= Move;

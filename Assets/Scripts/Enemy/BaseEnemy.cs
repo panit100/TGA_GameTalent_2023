@@ -112,14 +112,20 @@ namespace CCB.Enemy
         public void OnTimeStop(float timeTostop)
         {
             timeState = TimeState.Stop;
-            StartCoroutine(OnTimeUnStop(timeTostop));
+            StartCoroutine(OnTimeToState(timeTostop,TimeState.Normal));
         }
 
-        IEnumerator OnTimeUnStop(float time)
+        IEnumerator OnTimeToState(float time,TimeState newTimeState)
         {
             yield return new WaitForSeconds(time);
             
-            timeState = TimeState.Normal;
+            timeState = newTimeState;
+        }
+
+        public void OnFastForwardActivated(float duration)
+        {
+            timeState = TimeState.Accelerate;
+            StartCoroutine(OnTimeToState(duration,TimeState.Normal));
         }
     }
 }
