@@ -127,5 +127,11 @@ namespace CCB.Enemy
             timeState = TimeState.Accelerate;
             StartCoroutine(OnTimeToState(duration,TimeState.Normal));
         }
+
+        public void OnSlowPokeActivated(float duration)
+        {
+            timeState = TimeState.Slow;
+            StartCoroutine(OnTimeToState(duration, TimeState.Normal));
+        }
     }
 }
