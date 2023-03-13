@@ -17,6 +17,8 @@ namespace CCB.Enemy
 
     public class BaseEnemy : MonoBehaviour, IDamageable
     {
+        [SerializeField] TimeState timeState = TimeState.Normal;
+
         [Header("EnemyStatus")]
         [SerializeField] EnemyType enemyType;
         [SerializeField] float healthPoint;
@@ -31,8 +33,6 @@ namespace CCB.Enemy
 
         //TODO: Implement state mechine later (AISTATE)
         NavMeshAgent navMeshAgent;
-
-        bool isStopping;
 
         public Action onDestroy;
 
@@ -58,7 +58,7 @@ namespace CCB.Enemy
 
         bool IsPlayerInTriggerArea()
         {
-            if(isStopping)
+            if(timeState == TimeState.Stop)
             {
                 navMeshAgent.speed = 0;
                 return false;
@@ -70,7 +70,7 @@ namespace CCB.Enemy
             {
                 if (collider.TryGetComponent<PlayerManager>(out var player))
                 {
-                    navMeshAgent.speed = speed * TimeManager.Instance.GetTime();
+                    navMeshAgent.speed = speed * TimeManager.Instance.GetTime(timeState);
                     return true;
                 }
             }
@@ -82,7 +82,7 @@ namespace CCB.Enemy
 
         public void ProcessDamage(float damage)
         {
-            if(isStopping)
+            if(timeState == TimeState.Stop)
                 return;
 
             healthPoint -= damage;
@@ -111,7 +111,7 @@ namespace CCB.Enemy
 
         public void OnTimeStop(float timeTostop)
         {
-            isStopping = true;
+            timeState = TimeState.Stop;
             StartCoroutine(OnTimeUnStop(timeTostop));
         }
 
@@ -119,7 +119,7 @@ namespace CCB.Enemy
         {
             yield return new WaitForSeconds(time);
             
-            isStopping = false;
+            timeState = TimeState.Normal;
         }
     }
 }

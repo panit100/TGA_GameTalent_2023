@@ -7,6 +7,8 @@ namespace CCB.Player
 {
     public class PlayerMovement : MonoBehaviour
     {
+        [SerializeField] TimeState timeState = TimeState.Normal;
+
         [SerializeField] float speed;
 
         Rigidbody rigidbody;
@@ -24,7 +26,7 @@ namespace CCB.Player
 
         void Move(Vector3 direction)
         {
-            rigidbody.velocity = direction * speed * TimeManager.Instance.GetTime();
+            rigidbody.velocity = direction * speed * TimeManager.Instance.GetTime(timeState);
         }
 
         void Dash()

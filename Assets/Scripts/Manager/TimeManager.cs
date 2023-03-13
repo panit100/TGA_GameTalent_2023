@@ -15,7 +15,7 @@ namespace CCB.Gameplay
 
     public class TimeManager : Singleton<TimeManager>
     {
-        [SerializeField] TimeState currentTimeState;
+        // [SerializeField] TimeState currentTimeState;
 
         protected override void InitAfterAwake()
         {
@@ -24,25 +24,25 @@ namespace CCB.Gameplay
 
         void Start()
         {
-            OnChangeTimeState(TimeState.Normal);
+            // OnChangeTimeState(TimeState.Normal);
         }
 
-        public void OnChangeTimeState(TimeState state)
-        {
-            currentTimeState = state;
+        // public void OnChangeTimeState(TimeState state)
+        // {
+        //     currentTimeState = state;
 
-            switch(currentTimeState)
-            {
-                case TimeState.Normal:
-                    break;
-                case TimeState.Accelerate:
-                    break;
-                case TimeState.Slow:
-                    break;
-                case TimeState.Stop:
-                    break;
-            }
-        }
+        //     switch(currentTimeState)
+        //     {
+        //         case TimeState.Normal:
+        //             break;
+        //         case TimeState.Accelerate:
+        //             break;
+        //         case TimeState.Slow:
+        //             break;
+        //         case TimeState.Stop:
+        //             break;
+        //     }
+        // }
 
         float NormalTime()
         {
@@ -64,11 +64,11 @@ namespace CCB.Gameplay
             return 0;
         }
 
-        public float GetTime()
+        public float GetTime(TimeState timeState)
         {
             var time = 1f;
 
-            switch(currentTimeState)
+            switch(timeState)
             {
                 case TimeState.Normal:
                     time = NormalTime();
@@ -87,9 +87,9 @@ namespace CCB.Gameplay
             return time;
         }
 
-        public TimeState GetTimeState()
-        {
-            return currentTimeState;
-        }
+        // public TimeState GetTimeState()
+        // {
+        //     return currentTimeState;
+        // }
     }
 }
