@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace CCB.Player
 {
-    enum SkillType
+    public enum SkillType
     {
-
+        BrokeAlarm,
     }
 
     public class PlayerSkill : MonoBehaviour
@@ -20,7 +20,18 @@ namespace CCB.Player
 
         void ActiveSkill()
         {
-            Debug.Log("Active Skill!!");
+            skillConfig.Skill1.Skill();
+        }
+
+        void OnDrawGizmos() 
+        {
+
+            switch(skillConfig.Skill1.GetSkillType())
+            {
+                case SkillType.BrokeAlarm :
+                    Gizmos.DrawWireSphere(transform.position,((BrokeAlarm)skillConfig.Skill1).GetSkillRadius());
+                    break;
+            }
         }
     }
 }

@@ -6,7 +6,18 @@ namespace CCB.Player
 {
     public abstract class SkillObject : ScriptableObject
     {
-        SkillType skillType;
+        [SerializeField] SkillType skillType;
+        [SerializeField] float skillCooldown;
         public abstract void Skill();
+
+        public SkillType GetSkillType()
+        {
+            return skillType;
+        }
+
+        public float GetSkillCooldown()
+        {
+            return skillCooldown;
+        }
     }
 }

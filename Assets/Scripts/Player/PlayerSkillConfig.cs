@@ -9,7 +9,7 @@ namespace CCB.Player
     public class PlayerSkillConfig
     {
         public SkillObject Skill1;
-        public SkillObject Skill2;
+        // public SkillObject Skill2;
 
     }
 }

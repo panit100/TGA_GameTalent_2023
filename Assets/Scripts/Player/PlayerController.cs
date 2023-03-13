@@ -12,6 +12,8 @@ namespace CCB.Player
         public Action onShoot;
         public Action onActiveSkill;
 
+        Vector3 lookDirection = Vector3.zero;
+
         void FixedUpdate()
         {
             LookAtMouse();
@@ -24,19 +26,23 @@ namespace CCB.Player
 
         void LookAtMouse()
         {
-            Vector3 tempdirection = Vector3.zero;
+            lookDirection = Vector3.zero;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if(Physics.Raycast(ray,out RaycastHit hit))
             {
-                //float angle = Mathf.Atan2(hit.point.z,hit.point.x) * Mathf.Rad2Deg - 90f;
-                 tempdirection = hit.point- transform.position;
+                lookDirection = hit.point- transform.position;
             }
             else
             {
-                tempdirection = Vector3.zero;
+                lookDirection = Vector3.zero;
             }
-            tempdirection.y = 0f;
-            transform.forward = tempdirection;
+            lookDirection.y = 0f;
+            transform.forward = lookDirection;
+        }
+
+        public Vector3 LookAtDirection()
+        {
+            return lookDirection.normalized;
         }
 
         private void OnDrawGizmos()

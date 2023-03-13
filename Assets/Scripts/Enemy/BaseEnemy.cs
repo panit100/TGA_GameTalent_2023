@@ -5,6 +5,7 @@ using CCB;
 using CCB.Player;
 using UnityEngine.AI;
 using CCB.Gameplay;
+using System;
 
 namespace CCB.Enemy
 {
@@ -16,6 +17,7 @@ namespace CCB.Enemy
 
     public class BaseEnemy : MonoBehaviour, IDamageable
     {
+        [Header("EnemyStatus")]
         [SerializeField] EnemyType enemyType;
         [SerializeField] float healthPoint;
         [SerializeField] float damage;
@@ -24,12 +26,15 @@ namespace CCB.Enemy
         [SerializeField] float attackRange;
         [SerializeField] float visionRange;
 
-        //TODO: Implement state mechine later (AISTATE)
-
+        [Header("EnemySkill")]
         [SerializeField] EnemySkillConfig enemySkill;
 
+        //TODO: Implement state mechine later (AISTATE)
         NavMeshAgent navMeshAgent;
-        
+
+        bool isStopping;
+
+        public Action onDestroy;
 
         void Start()
         {
@@ -47,17 +52,25 @@ namespace CCB.Enemy
         {
             if(IsPlayerInTriggerArea())
                 navMeshAgent.SetDestination(PlayerManager.Instance.transform.position);
+            else
+                navMeshAgent.SetDestination(this.transform.position);
         }
 
         bool IsPlayerInTriggerArea()
         {
+            if(isStopping)
+            {
+                navMeshAgent.speed = 0;
+                return false;
+            }
+
             var overlapCollider = Physics.OverlapSphere(transform.position, visionRange);
 
             foreach(var collider in overlapCollider)
             {
                 if (collider.TryGetComponent<PlayerManager>(out var player))
                 {
-                    navMeshAgent.speed = speed * (TimeManager.Instance.GetTimeState() == TimeState.Slow ? TimeManager.Instance.GetTime() : 1);
+                    navMeshAgent.speed = speed * TimeManager.Instance.GetTime();
                     return true;
                 }
             }
@@ -69,6 +82,9 @@ namespace CCB.Enemy
 
         public void ProcessDamage(float damage)
         {
+            if(isStopping)
+                return;
+
             healthPoint -= damage;
             if(healthPoint <= 0)
                 OnDie();
@@ -76,7 +92,12 @@ namespace CCB.Enemy
 
         void OnDie()
         {
+            Destroy(this.gameObject);
+        }
 
+        void OnDestroy() 
+        {
+            onDestroy?.Invoke();    
         }
 
         void OnDrawGizmos() 
@@ -86,6 +107,19 @@ namespace CCB.Enemy
 
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position,attackRange);
+        }
+
+        public void OnTimeStop(float timeTostop)
+        {
+            isStopping = true;
+            StartCoroutine(OnTimeUnStop(timeTostop));
+        }
+
+        IEnumerator OnTimeUnStop(float time)
+        {
+            yield return new WaitForSeconds(time);
+            
+            isStopping = false;
         }
     }
 }

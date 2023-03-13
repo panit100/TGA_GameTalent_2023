@@ -24,7 +24,7 @@ namespace CCB.Player
 
         void Move(Vector3 direction)
         {
-            rigidbody.velocity = direction * speed * (TimeManager.Instance.GetTimeState() == TimeState.Slow ? TimeManager.Instance.GetTime() : 1);
+            rigidbody.velocity = direction * speed * TimeManager.Instance.GetTime();
         }
 
         void Dash()
