@@ -396,9 +396,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillConfig:
     Skill1: {fileID: 11400000, guid: 3ef82f87fb3dd9d4890b539bcb80ad44, type: 2}
-  angle: 82.1
-  radius: 5.5
-  segments: 100
 --- !u!1 &52641885
 GameObject:
   m_ObjectHideFlags: 0

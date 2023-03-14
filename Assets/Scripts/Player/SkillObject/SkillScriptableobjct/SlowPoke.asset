@@ -15,5 +15,5 @@ MonoBehaviour:
   skillType: 2
   skillCooldown: 1
   damage: 1
-  skillRange: 1
-  slowDuration: 10
+  skillRange: {x: 7.3, y: 1.59, z: 27.65}
+  slowDuration: 3

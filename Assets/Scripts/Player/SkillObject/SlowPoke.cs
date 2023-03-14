@@ -10,21 +10,30 @@ namespace CCB.Player
     public class SlowPoke : SkillObject
     {
         [SerializeField] float damage;
-        [SerializeField] float skillRange;
+        public Vector3 skillRange;
         [SerializeField] float slowDuration;
 
-        List<BaseEnemy> allEnemyList;
         public override void Skill()
         {
-            Debug.Log("OK");
-            var allEnemyList = FindObjectsOfTypeAll(typeof(BaseEnemy));
-            foreach (BaseEnemy baseEnemy in allEnemyList)
+            Collider[] enemyList = Physics.OverlapBox(GetStartPosition(), skillRange/2 , PlayerManager.Instance.transform.rotation);
+            foreach (var n in enemyList)
             {
-                baseEnemy.OnSlowPokeActivated(slowDuration);
-
+                if(n.GetComponent<BaseEnemy>() != null)
+                {
+                    n.GetComponent<BaseEnemy>().OnSlowPokeActivated(slowDuration);
+                }
             }
         }
-        
+
+        public Vector3 GetStartPosition()
+        {
+            Vector3 newPosition = PlayerManager.Instance.transform.position + (PlayerManager.Instance.transform.forward * (skillRange.z/2));
+            return newPosition;
+        }
+        public Vector3 GetSkillRange()
+        {
+            return skillRange;
+        }
     }
 
 }
