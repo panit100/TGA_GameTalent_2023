@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using CCB.Enemy;
+using CCB.Gameplay;
 
 namespace CCB.Player
 {
@@ -9,6 +9,10 @@ namespace CCB.Player
     {
         [SerializeField] BaseBullet baseBullet;
         [SerializeField] float range;
+        [SerializeField] int maxBullet;
+        [SerializeField] List<BaseBullet> bulletList;
+        [SerializeField] float fireRate;
+        bool canShoot = true;
 
         Vector3 LookDirection = Vector3.zero;
 
@@ -16,6 +20,7 @@ namespace CCB.Player
 
         void Start()
         {
+            Reload();
             PlayerManager.Instance.PlayerController.onShoot += Shoot;
         }
 
@@ -24,14 +29,49 @@ namespace CCB.Player
             LookDirection = PlayerManager.Instance.PlayerController.LookAtDirection();
         }
 
+        bool CheckReload()
+        {
+            if (bulletList.Count <= 0)
+            {
+                print("Reload");
+                return true;
+            }
+            return false;
+        }
+
+        void Reload()
+        {
+            for (var i = 0; i < maxBullet; i++)
+            {
+                bulletList.Add(baseBullet);
+            }
+        }
+
+        IEnumerator WaitForNextShoot(float time)
+        {
+            yield return new WaitForSeconds(time);
+            canShoot = true;
+        }
+
         void Shoot()
         {
-            aimRay = new Ray(transform.position,LookDirection);
-            if(Physics.Raycast(aimRay,out RaycastHit hit,range))
+            if (CheckReload())
             {
-                IDamageable hitObject = hit.collider.GetComponent<IDamageable>() as IDamageable;
-                hitObject.ProcessDamage(baseBullet.Damage);
-                Debug.Log("Shoot!!");
+                Reload();
+            }
+            else if (!CheckReload() && canShoot == true)
+            {
+                canShoot = false;
+                StartCoroutine(WaitForNextShoot(fireRate));
+
+                aimRay = new Ray(transform.position,LookDirection);
+                if(Physics.Raycast(aimRay,out RaycastHit hit,range))
+                {
+                    IDamageable hitObject = hit.collider.GetComponent<IDamageable>() as IDamageable;
+                    hitObject.ProcessDamage(baseBullet.Damage);
+                    Debug.Log("Shoot!!");
+                }
+                bulletList.RemoveAt(0);
             }
         }
 

@@ -67,7 +67,7 @@ namespace CCB.Player
 
         void OnShoot()
         {
-            if(Input.GetMouseButton(0))
+            if(Input.GetMouseButtonDown(0))
                 onShoot?.Invoke();
         }
 

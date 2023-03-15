@@ -7,7 +7,7 @@ namespace CCB.Player
 {
     public class PlayerMovement : MonoBehaviour
     {
-        [SerializeField] TimeState timeState = TimeState.Normal;
+        public TimeState timeState = TimeState.Normal;
 
         [SerializeField] float speed;
 
