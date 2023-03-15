@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97b9c8d90564025429443692b259d24a, type: 3}
   m_Name: FastForward
   m_EditorClassIdentifier: 
-  skillType: 1
+  skillType: 2
   skillCooldown: 1
   skillDuration: 2

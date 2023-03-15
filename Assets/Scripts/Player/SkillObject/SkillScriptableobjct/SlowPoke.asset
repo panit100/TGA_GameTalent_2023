@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 989a2cd8813ca674fb29b0b69552c9c3, type: 3}
   m_Name: SlowPoke
   m_EditorClassIdentifier: 
-  skillType: 2
+  skillType: 3
   skillCooldown: 1
   damage: 1
   skillRange: {x: 7.3, y: 1.59, z: 27.65}

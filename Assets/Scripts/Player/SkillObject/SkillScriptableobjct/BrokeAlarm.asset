@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8ac2f42044fa644f8c3870ef61cd5db, type: 3}
   m_Name: BrokeAlarm
   m_EditorClassIdentifier: 
-  skillType: 0
+  skillType: 1
   skillCooldown: 0
   TimeToStop: 5
   skillRadius: 20
