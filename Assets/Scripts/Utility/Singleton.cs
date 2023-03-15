@@ -17,9 +17,12 @@ namespace CCB.Utility
 
         protected Singleton()
         {
-            if(Instance != null && Instance != this)
-                throw new System.Exception($"There are 2 Singleton in Scene. Plase remove one of them.");
-            else
+            // if(Instance != null && Instance != this)
+            // {
+            //     Instance = this as T;
+            //     throw new System.Exception($"There are 2 Singleton in Scene. Plase remove one of them.");
+            // }
+            // else
                 Instance = this as T;
         }
     }

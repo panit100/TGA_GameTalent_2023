@@ -6,6 +6,7 @@ namespace CCB.Player
 {
     public enum SkillType
     {
+        AccelTime,
         BrokeAlarm,
         FastForward,
         SlowPoke
@@ -27,20 +28,28 @@ namespace CCB.Player
 
         void OnDrawGizmos() 
         {
-            Gizmos.color = Color.yellow;
             
-
-            switch (skillConfig.Skill1.GetSkillType())
+            if(skillConfig.Skill1 != null)
             {
-                case SkillType.BrokeAlarm :
-                    Gizmos.DrawWireSphere(transform.position,((BrokeAlarm)skillConfig.Skill1).GetSkillRadius());
-                    break;
-                case SkillType.SlowPoke:
-                    Matrix4x4 rotationMatrix = Matrix4x4.TRS(transform.position + (transform.forward * (((SlowPoke)skillConfig.Skill1).skillRange.z/2)), transform.rotation, transform.lossyScale);
-                    Gizmos.matrix = rotationMatrix;
-                    Gizmos.DrawWireCube(Vector3.zero, ((SlowPoke)skillConfig.Skill1).GetSkillRange());
-                    break;
+                Gizmos.color = Color.yellow;
+
+                switch (skillConfig.Skill1.GetSkillType())
+                {
+                    case SkillType.BrokeAlarm :
+                        Gizmos.DrawWireSphere(transform.position,((BrokeAlarm)skillConfig.Skill1).GetSkillRadius());
+                        break;
+                    case SkillType.SlowPoke:
+                        Matrix4x4 rotationMatrix = Matrix4x4.TRS(transform.position + (transform.forward * (((SlowPoke)skillConfig.Skill1).skillRange.z/2)), transform.rotation, transform.lossyScale);
+                        Gizmos.matrix = rotationMatrix;
+                        Gizmos.DrawWireCube(Vector3.zero, ((SlowPoke)skillConfig.Skill1).GetSkillRange());
+                        break;
+                    case SkillType.AccelTime:
+                        break;
+                    case SkillType.FastForward:
+                        break;
+                }
             }
+            
         }
     }
 }
