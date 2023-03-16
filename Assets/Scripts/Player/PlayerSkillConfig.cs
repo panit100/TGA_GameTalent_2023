@@ -8,10 +8,8 @@ namespace CCB.Player
     [Serializable]
     public class PlayerSkillConfig
     {
-        public SkillObject AccelTime;
-        public SkillObject BrokeAlarm;
-        public SkillObject FastForward;
-        public SkillObject SlowPoke;
+        public SkillObject skillObjects;
+        
 
     }
 }

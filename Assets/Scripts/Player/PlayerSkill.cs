@@ -14,7 +14,9 @@ namespace CCB.Player
 
     public class PlayerSkill : MonoBehaviour
     {
-        [SerializeField] PlayerSkillConfig skillConfig;
+        [SerializeField] List<PlayerSkillConfig> skillObjects;
+
+        private int currentSkill;
         
 
         void Start()
@@ -36,7 +38,7 @@ namespace CCB.Player
 
         void ActiveSkill()
         {
-            // skillConfig.Skill1.Skill();
+            skillObjects[currentSkill].skillObjects.Skill();
         }
 
         void SwapSkill(float value)
@@ -49,12 +51,20 @@ namespace CCB.Player
 
         void SwapUp()
         {
-            Debug.Log("Swap Up");
+            currentSkill += 1;
+            currentSkill %= skillObjects.Count;
+            Debug.Log(currentSkill);
         }
 
         void SwapDown()
         {
-            Debug.Log("Swap Down");
+            currentSkill -= 1;
+            if(currentSkill < 0)
+            {
+                currentSkill = skillObjects.Count - 1;
+            }
+            currentSkill %= skillObjects.Count;
+            Debug.Log(currentSkill);
         }
 
         void OnDestroy()
