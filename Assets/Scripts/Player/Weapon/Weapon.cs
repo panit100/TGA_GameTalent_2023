@@ -49,6 +49,7 @@ namespace CCB.Player
         {
             if (bulletList.Count <= 0)
             {
+                Reload();
                 return true;
             }
             return false;
@@ -77,18 +78,21 @@ namespace CCB.Player
                 //SetFireRate();
                 StartCoroutine(WaitForNextShoot(fireRate));
 
-                aimRay = new Ray(transform.position,LookDirection);
-                if(Physics.Raycast(aimRay,out RaycastHit hit,range))
-                {
-                    IDamageable hitObject = hit.collider.GetComponent<IDamageable>() as IDamageable;
-                    hitObject.ProcessDamage(bulletList[0].Damage);
-                }
+                ShootTarget();
                 bulletList.RemoveAt(0);
             }
 
-            if (CheckReload())
+            CheckReload();
+        }
+
+        void ShootTarget()
+        {
+            aimRay = new Ray(transform.position,LookDirection);
+            
+            if(Physics.Raycast(aimRay,out RaycastHit hit,range))
             {
-                Reload();
+                IDamageable hitObject = hit.collider.GetComponent<IDamageable>() as IDamageable;
+                hitObject.ProcessDamage(bulletList[0].Damage);
             }
         }
 

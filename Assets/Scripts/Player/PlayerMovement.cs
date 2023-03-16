@@ -112,13 +112,14 @@ namespace CCB.Player
         IEnumerator SpeedBurst(float duration,TimeState newTimeState)
         {
             var t = 0f;
+            
             while(t<duration)
             {
-               // Debug.Log($"$ Clock UP !! x{GetPlayerCurrentspeed()} speed {t}sec ");
                 PlayerManager.Instance.PlayerTimeDependent.BoostComponent(GetPlayerCurrentspeed());
                 t += Time.deltaTime;
                 yield return null;
             }
+
             tempBoostSpeed = 1;
             PlayerManager.Instance.PlayerTimeDependent.BoostComponent(tempBoostSpeed);
             timeState = newTimeState;

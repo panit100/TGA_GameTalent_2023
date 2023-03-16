@@ -8,8 +8,6 @@ namespace CCB.Player
     [Serializable]
     public class PlayerSkillConfig
     {
-        public SkillObject skillObjects;
-        
-
+        public List<SkillObject> skillObjects;
     }
 }
