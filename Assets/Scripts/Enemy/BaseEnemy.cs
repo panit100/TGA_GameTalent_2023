@@ -28,11 +28,17 @@ namespace CCB.Enemy
         [SerializeField] float attackRange;
         [SerializeField] float visionRange;
 
+        [SerializeField] UnityEngine.UI.Image healthBarMaterial;
+
         [Header("EnemySkill")]
         [SerializeField] EnemySkillConfig enemySkill;
 
         //TODO: Implement state mechine later (AISTATE)
         NavMeshAgent navMeshAgent;
+
+        private float maxHealthPoint;
+
+        private Material ins_HealthBarMaterial;
 
         public Action onDestroy;
 
@@ -41,6 +47,12 @@ namespace CCB.Enemy
             navMeshAgent = GetComponent<NavMeshAgent>();
 
             navMeshAgent.stoppingDistance = attackRange;
+
+            maxHealthPoint = healthPoint;
+
+            ins_HealthBarMaterial = Instantiate(healthBarMaterial.material);
+
+            healthBarMaterial.material = ins_HealthBarMaterial;
         }
 
         void FixedUpdate()
@@ -86,8 +98,15 @@ namespace CCB.Enemy
                 return;
 
             healthPoint -= damage;
-            if(healthPoint <= 0)
+            AdjustBar(healthPoint);
+            if (healthPoint <= 0)
                 OnDie();
+        }
+
+        public void AdjustBar(float currentHealthPoint)
+        {
+            float healthNormalize = currentHealthPoint / maxHealthPoint;
+            ins_HealthBarMaterial.SetFloat("_PercentBar", healthNormalize);
         }
 
         void OnDie()
