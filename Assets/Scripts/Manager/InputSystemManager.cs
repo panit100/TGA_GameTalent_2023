@@ -27,6 +27,7 @@ namespace CCB.Utility
         public UnityAction onReload;
         public UnityAction onPause;
         public UnityAction onChangeBullet;
+        public UnityAction<float> onSwapSkill;
     #endregion
 
         InputActionMap playerControlMap;
@@ -137,6 +138,11 @@ namespace CCB.Utility
             {
                 if(value.isPressed)
                     onChangeBullet?.Invoke();
+            }
+
+            void OnSwapSkill(InputValue value)
+            {
+                onSwapSkill?.Invoke(value.Get<float>());
             }
 
         #endregion

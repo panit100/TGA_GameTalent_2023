@@ -13,6 +13,7 @@ namespace CCB.Player
         public Action onDash;
         public Action onShoot;
         public Action onActiveSkill;
+        public Action<float> onSwapSkill;
 
         Vector3 lookDirection = Vector3.zero;
         Vector3 moveDirection = Vector3.zero;
@@ -30,6 +31,7 @@ namespace CCB.Player
             InputSystemManager.Instance.onShoot += OnShoot;  
             InputSystemManager.Instance.onDash += OnDash;  
             InputSystemManager.Instance.onActiveSkill += OnActiveSkill;
+            InputSystemManager.Instance.onSwapSkill += OnSwapSkill;
             // InputSystemManager.Instance.onInteract += LookAtMouse;   
             // InputSystemManager.Instance.onReload += LookAtMouse;
             // InputSystemManager.Instance.onChangeBullet += LookAtMouse;
@@ -43,6 +45,7 @@ namespace CCB.Player
             InputSystemManager.Instance.onShoot -= OnShoot;  
             InputSystemManager.Instance.onDash -= OnDash;  
             InputSystemManager.Instance.onActiveSkill -= OnActiveSkill;
+            InputSystemManager.Instance.onSwapSkill -= OnSwapSkill;
             // InputSystemManager.Instance.onInteract += LookAtMouse;   
             // InputSystemManager.Instance.onReload += LookAtMouse;
             // InputSystemManager.Instance.onChangeBullet += LookAtMouse;
@@ -92,6 +95,11 @@ namespace CCB.Player
         void OnActiveSkill()
         {
             onActiveSkill?.Invoke();
+        }
+
+        void OnSwapSkill(float value)
+        {
+            onSwapSkill?.Invoke(value);
         }
 
         private void OnDrawGizmos()
