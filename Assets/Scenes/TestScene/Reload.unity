@@ -229,6 +229,7 @@ GameObject:
   - component: {fileID: 10281853}
   - component: {fileID: 10281851}
   - component: {fileID: 10281854}
+  - component: {fileID: 10281855}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -357,6 +358,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeState: 0
   speed: 10
+  dashSpeed: 0
+  dashDuration: 0
+  dashCooldown: 0
 --- !u!114 &10281852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -394,8 +398,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89cb22e61b0398946afa167c0b1667a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillConfig:
-    Skill1: {fileID: 11400000, guid: 3ef82f87fb3dd9d4890b539bcb80ad44, type: 2}
+  skillObjects: []
+--- !u!114 &10281855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 10281844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5fb610183a57ec4e95dc3bb59dc5203, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerAnim: {fileID: 0}
 --- !u!1 &52641885
 GameObject:
   m_ObjectHideFlags: 0
@@ -1516,8 +1532,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b601fc841604564486084371d2670d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseBullet: {fileID: 11400000, guid: 357abc2841ef0884aa599938b3978d9b, type: 2}
   range: 9
+  bulletListForRandom:
+  - {fileID: 11400000, guid: 357abc2841ef0884aa599938b3978d9b, type: 2}
+  - {fileID: 11400000, guid: 42ed2de0346394442b26eec0d37934b1, type: 2}
+  - {fileID: 11400000, guid: 9a98bd7487393094eaca36ecdd73f91a, type: 2}
+  maxBullet: 6
+  bulletList: []
+  fireRate: 1
 --- !u!1 &603138838
 GameObject:
   m_ObjectHideFlags: 0

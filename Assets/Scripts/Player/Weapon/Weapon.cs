@@ -7,8 +7,9 @@ namespace CCB.Player
 {
     public class Weapon : MonoBehaviour
     {
-        [SerializeField] BaseBullet baseBullet;
+        //[SerializeField] BaseBullet baseBullet;
         [SerializeField] float range;
+        [SerializeField] List<BaseBullet> bulletListForRandom;
         [SerializeField] int maxBullet;
         [SerializeField] List<BaseBullet> bulletList;
         [SerializeField] float fireRate;
@@ -20,8 +21,23 @@ namespace CCB.Player
 
         void Start()
         {
+            SetUpInputAction();
+
             Reload();
+        }
+
+        void SetUpInputAction()
+        {
             PlayerManager.Instance.PlayerController.onShoot += Shoot;
+            PlayerManager.Instance.PlayerController.onReload += Reload;
+            PlayerManager.Instance.PlayerController.onDiscardBullet += DiscardBullet;
+        }
+
+        void RemoveInputAction()
+        {
+            PlayerManager.Instance.PlayerController.onShoot -= Shoot;
+            PlayerManager.Instance.PlayerController.onReload -= Reload;
+            PlayerManager.Instance.PlayerController.onDiscardBullet -= DiscardBullet;
         }
 
         void FixedUpdate() 
@@ -33,7 +49,6 @@ namespace CCB.Player
         {
             if (bulletList.Count <= 0)
             {
-                print("Reload");
                 return true;
             }
             return false;
@@ -41,9 +56,10 @@ namespace CCB.Player
 
         void Reload()
         {
-            for (var i = 0; i < maxBullet; i++)
+            for (var i = bulletList.Count; i < maxBullet; i++)
             {
-                bulletList.Add(baseBullet);
+                BaseBullet addBullet = bulletListForRandom[Random.Range(0,bulletListForRandom.Count)];
+                bulletList.Add(addBullet);
             }
         }
 
@@ -55,29 +71,46 @@ namespace CCB.Player
 
         void Shoot()
         {
-            if (CheckReload())
-            {
-                Reload();
-            }
-            else if (!CheckReload() && canShoot == true)
+            if (!CheckReload() && canShoot == true)
             {
                 canShoot = false;
+                //SetFireRate();
                 StartCoroutine(WaitForNextShoot(fireRate));
 
                 aimRay = new Ray(transform.position,LookDirection);
                 if(Physics.Raycast(aimRay,out RaycastHit hit,range))
                 {
                     IDamageable hitObject = hit.collider.GetComponent<IDamageable>() as IDamageable;
-                    hitObject.ProcessDamage(baseBullet.Damage);
-                    Debug.Log("Shoot!!");
+                    hitObject.ProcessDamage(bulletList[0].Damage);
                 }
                 bulletList.RemoveAt(0);
             }
+
+            if (CheckReload())
+            {
+                Reload();
+            }
+        }
+
+        void SetFireRate()
+        {
+            fireRate = fireRate / TimeManager.Instance.GetTime(PlayerManager.Instance.PlayerMovement.timeState);
+            // Set If FireRate OverCapLevel
+        }
+
+        void DiscardBullet()
+        {
+            bulletList.RemoveAt(0);
         }
 
         void OnDrawGizmos()
         {
             Gizmos.DrawRay(transform.position,LookDirection * range);
+        }
+
+        void OnDestroy() 
+        {
+            RemoveInputAction();
         }
     }
 }

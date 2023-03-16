@@ -87,7 +87,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "ChangeBullet",
+                    "name": "DiscardBullet",
                     "type": "Button",
                     "id": "5c8d4e09-70cd-4c79-8c82-03b805484dac",
                     "expectedControlType": "Button",
@@ -245,7 +245,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "ChangeBullet",
+                    "action": "DiscardBullet",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

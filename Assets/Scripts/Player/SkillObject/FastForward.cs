@@ -21,7 +21,7 @@ namespace CCB.Player
 
         public override void Skill()
         {
-            var allEnemyList = Resources.FindObjectsOfTypeAll(typeof(BaseEnemy));
+            var allEnemyList = FindObjectsOfType(typeof(BaseEnemy));
 
             foreach (BaseEnemy baseEnemy in allEnemyList)
             {

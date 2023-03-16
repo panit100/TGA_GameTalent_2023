@@ -26,7 +26,7 @@ namespace CCB.Utility
         public UnityAction onInteract;
         public UnityAction onReload;
         public UnityAction onPause;
-        public UnityAction onChangeBullet;
+        public UnityAction onDiscardBullet;
         public UnityAction<float> onSwapSkill;
     #endregion
 
@@ -134,10 +134,10 @@ namespace CCB.Utility
                     onPause?.Invoke();
             }
 
-            void OnChangeBullet(InputValue value)
+            void OnDiscardBullet(InputValue value)
             {
                 if(value.isPressed)
-                    onChangeBullet?.Invoke();
+                    onDiscardBullet?.Invoke();
             }
 
             void OnSwapSkill(InputValue value)

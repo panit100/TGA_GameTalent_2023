@@ -14,6 +14,8 @@ namespace CCB.Player
         public Action onShoot;
         public Action onActiveSkill;
         public Action<float> onSwapSkill;
+        public Action onReload;
+        public Action onDiscardBullet;
 
         Vector3 lookDirection = Vector3.zero;
         Vector3 moveDirection = Vector3.zero;
@@ -33,8 +35,8 @@ namespace CCB.Player
             InputSystemManager.Instance.onActiveSkill += OnActiveSkill;
             InputSystemManager.Instance.onSwapSkill += OnSwapSkill;
             // InputSystemManager.Instance.onInteract += LookAtMouse;   
-            // InputSystemManager.Instance.onReload += LookAtMouse;
-            // InputSystemManager.Instance.onChangeBullet += LookAtMouse;
+            InputSystemManager.Instance.onReload += OnReload;
+            InputSystemManager.Instance.onDiscardBullet += OnDiscardBullet;
         }
 
         void RemoveInputAction()
@@ -47,8 +49,8 @@ namespace CCB.Player
             InputSystemManager.Instance.onActiveSkill -= OnActiveSkill;
             InputSystemManager.Instance.onSwapSkill -= OnSwapSkill;
             // InputSystemManager.Instance.onInteract += LookAtMouse;   
-            // InputSystemManager.Instance.onReload += LookAtMouse;
-            // InputSystemManager.Instance.onChangeBullet += LookAtMouse;
+            InputSystemManager.Instance.onReload += OnReload;
+            InputSystemManager.Instance.onDiscardBullet += OnDiscardBullet;
         }
 
         void LookAtMouse(Vector2 mousePosition)
@@ -100,6 +102,16 @@ namespace CCB.Player
         void OnSwapSkill(float value)
         {
             onSwapSkill?.Invoke(value);
+        }
+
+        void OnReload()
+        {
+            onReload?.Invoke();
+        }
+
+        void OnDiscardBullet()
+        {
+            onDiscardBullet?.Invoke();
         }
 
         private void OnDrawGizmos()
