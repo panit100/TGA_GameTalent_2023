@@ -104,7 +104,7 @@ namespace CCB.Player
 
         void SetFireRate()
         {
-            fireRate = fireRate / TimeManager.Instance.GetTime(PlayerManager.Instance.PlayerMovement.timeState);
+            fireRate = fireRate / TimeManager.Instance.GetTime(PlayerManager.Instance.PlayerMovement.TimeState);
             // Set If FireRate OverCapLevel
         }
 
