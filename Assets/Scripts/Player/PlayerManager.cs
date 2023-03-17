@@ -12,16 +12,16 @@ namespace CCB.Player
     [RequireComponent(typeof(PlayerHealth))]
     public class PlayerManager : Singleton<PlayerManager>
     {
-        private PlayerController playerController;
-
-        private PlayerMovement playerMovement;
-
-        private PlayerTimeDependent playerTimeDependent;
+        PlayerController playerController;
+        PlayerMovement playerMovement;
+        PlayerTimeDependent playerTimeDependent;
+        Weapon playerWeapon;
 
         public PlayerController PlayerController {get {return playerController;}}
 
         public PlayerMovement PlayerMovement { get { return playerMovement;}}
         public PlayerTimeDependent PlayerTimeDependent { get { return playerTimeDependent;}}
+        public Weapon PlayerWeapon {get {return playerWeapon;} set {playerWeapon = value;}}
 
         public Animator playerAnimator;
 
