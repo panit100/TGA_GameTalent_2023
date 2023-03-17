@@ -85,6 +85,7 @@ namespace CCB.Player
 
                 ShootTarget();
                 bulletList.RemoveAt(0);
+                return;
             }
 
             CheckReload();
