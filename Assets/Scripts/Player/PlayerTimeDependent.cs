@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using CCB.Player;
 using UnityEngine;
 
-public class PlayerTimeDependent : MonoBehaviour
+namespace CCB.Player
 {
-   [SerializeField] private Animator PlayerAnim;
-
-   public void BoostComponent(float multiplier)
+   public class PlayerTimeDependent : MonoBehaviour
    {
-      PlayerAnim.speed = Mathf.Clamp(multiplier, 1, 3f);
+      public void BoostComponent(float multiplier)
+      {
+         PlayerManager.Instance.playerAnimator.speed = Mathf.Clamp(multiplier, 1, 3f);
+      }
    }
 }
+
