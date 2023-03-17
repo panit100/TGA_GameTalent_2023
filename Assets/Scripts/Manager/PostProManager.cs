@@ -41,7 +41,7 @@ public class PostProManager : Singleton<PostProManager>
    }
    IEnumerator DoTransistionOut(float duration)
    {
-       duration = Mathf.Clamp(duration*0.25f,1f,10);
+       duration = Mathf.Clamp(duration*0.1f,1f,4f);
        var t = 0f;
        var tempfloat = ScreenSpaceMat.GetFloat("_Size");
       
