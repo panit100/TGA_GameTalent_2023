@@ -57,6 +57,8 @@ namespace CCB.Player
 
         void Reload()
         {
+            PlayerManager.Instance.playerAnimator.SetTrigger("Reload");
+
             for (var i = bulletList.Count; i < maxBullet; i++)
             {
                 BaseBullet addBullet = bulletListForRandom[Random.Range(0,bulletListForRandom.Count)];
@@ -74,7 +76,10 @@ namespace CCB.Player
         {
             if (!CheckReload() && canShoot == true)
             {
+                
                 canShoot = false;
+                PlayerManager.Instance.playerAnimator.SetTrigger("Shoot");
+                
                 //SetFireRate();
                 StartCoroutine(WaitForNextShoot(fireRate));
 

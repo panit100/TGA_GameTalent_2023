@@ -71,6 +71,7 @@ namespace CCB.Player
         void OnPressMove(bool isPressed)
         {
             isMove = isPressed;
+            PlayerManager.Instance.playerAnimator.SetBool("isRun",isPressed);
         }
 
         void Dash()
@@ -80,6 +81,7 @@ namespace CCB.Player
 
             currentSpeed = dashSpeed;
             isDashing = true;
+            PlayerManager.Instance.playerAnimator.SetBool("isDash",true);
             InputSystemManager.Instance.TogglePlayerControl(false);
             StartCoroutine(Dashing(dashDuration,dashCooldown));
         }
@@ -134,6 +136,7 @@ namespace CCB.Player
 
             yield return new WaitForSeconds(dashCooldown);
             isDashing = false;
+            PlayerManager.Instance.playerAnimator.SetBool("isDash",false);
         }
 
         void OnDestroy() 

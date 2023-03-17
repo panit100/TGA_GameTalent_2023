@@ -6,6 +6,10 @@ using CCB.Utility;
 namespace CCB.Player
 {
     [RequireComponent(typeof(PlayerController))]
+    [RequireComponent(typeof(PlayerMovement))]
+    [RequireComponent(typeof(PlayerTimeDependent))]
+    [RequireComponent(typeof(PlayerSkill))]
+    [RequireComponent(typeof(PlayerHealth))]
     public class PlayerManager : Singleton<PlayerManager>
     {
         private PlayerController playerController;
@@ -16,9 +20,10 @@ namespace CCB.Player
 
         public PlayerController PlayerController {get {return playerController;}}
 
-        public PlayerMovement PlayerMovement { get { return playerMovement; } }
-        public PlayerTimeDependent PlayerTimeDependent { get { return playerTimeDependent; }
-        }
+        public PlayerMovement PlayerMovement { get { return playerMovement;}}
+        public PlayerTimeDependent PlayerTimeDependent { get { return playerTimeDependent;}}
+
+        public Animator playerAnimator;
 
         protected override void InitAfterAwake()
         {
