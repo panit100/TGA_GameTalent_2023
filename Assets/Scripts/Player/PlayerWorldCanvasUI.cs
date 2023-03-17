@@ -17,8 +17,8 @@ namespace CCB.Player.UI
 
         void AddBullet()
         {
-            var bullet = Instantiate(BulletPrefab);
-            bullet.transform.SetParent(BulletSlotParent);
+            var bullet = Instantiate(BulletPrefab, BulletSlotParent);
+            bullet.transform.localPosition = new Vector3(0, 0, 0);
         }
 
         void RemoveBullet()
