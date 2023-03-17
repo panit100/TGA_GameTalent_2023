@@ -31,8 +31,7 @@ namespace CCB.Player
         void Start()
         {
             SetUpInputAction();
-
-            Reload();
+            StartCoroutine(ReloadWhenStart());
         }
 
         void SetUpInputAction()
@@ -62,6 +61,12 @@ namespace CCB.Player
                 return true;
             }
             return false;
+        }
+
+        IEnumerator ReloadWhenStart()
+        {
+            yield return new WaitUntil(() => addBulletToMagazine != null);
+            Reload();
         }
 
         void Reload()
