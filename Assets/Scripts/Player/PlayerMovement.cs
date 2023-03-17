@@ -8,6 +8,7 @@ namespace CCB.Player
     public class PlayerMovement : MonoBehaviour
     {
         [SerializeField] TimeState timeState = TimeState.Normal;
+        public TimeState TimeState => timeState;
 
         [SerializeField] float speed;
 
@@ -66,11 +67,13 @@ namespace CCB.Player
             var t = 0f;
             while(t<duration)
             {
+                PostProManager.Instance.TransitionIn(duration);
                // Debug.Log($"$ Clock UP !! x{GetPlayerCurrentspeed()} speed {t}sec ");
                 PlayerManager.Instance.PlayerTimeDependent.BoostComponent(GetPlayerCurrentspeed());
                 t += Time.deltaTime;
                 yield return null;
             }
+            PostProManager.Instance.TransitionOut(duration);
             tempBoostSpeed = 1;
             PlayerManager.Instance.PlayerTimeDependent.BoostComponent(tempBoostSpeed);
             timeState = newTimeState;
