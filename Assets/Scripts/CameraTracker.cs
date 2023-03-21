@@ -6,7 +6,7 @@ public class CameraTracker : MonoBehaviour
 {
     [SerializeField] Transform target;
 
-    void Update()
+    void FixedUpdate()
     {
         transform.position = target.position;
     }

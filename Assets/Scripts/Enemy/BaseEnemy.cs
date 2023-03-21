@@ -42,8 +42,12 @@ namespace CCB.Enemy
 
         public Action onDestroy;
 
+        private EnemyVFX _enemyVFX;
+
         void Start()
         {
+            _enemyVFX = GetComponent<EnemyVFX>();
+            
             navMeshAgent = GetComponent<NavMeshAgent>();
 
             navMeshAgent.stoppingDistance = attackRange;
@@ -131,6 +135,7 @@ namespace CCB.Enemy
         public void OnTimeStop(float timeTostop)
         {
             timeState = TimeState.Stop;
+            _enemyVFX.PlayBrokeAlarm();
             StartCoroutine(OnTimeToState(timeTostop,TimeState.Normal));
         }
 
@@ -149,6 +154,7 @@ namespace CCB.Enemy
 
         public void OnSlowPokeActivated(float duration)
         {
+            _enemyVFX.PlaySlowpokeVFX();
             timeState = TimeState.Slow;
             StartCoroutine(OnTimeToState(duration, TimeState.Normal));
         }

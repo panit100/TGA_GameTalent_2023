@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
 using CCB.Gameplay;
 using CCB.Utility;
+using Vector3 = UnityEngine.Vector3;
 
 namespace CCB.Player
 {
@@ -59,10 +61,16 @@ namespace CCB.Player
 
         void Move()
         {
-            if(!isMove)
+            if (!isMove)
+            {
                 direction = Vector3.zero;
-
-            rigidbody.velocity = direction * GetPlayerCurrentspeed();
+                rigidbody.angularVelocity = Vector3.zero;
+                rigidbody.velocity = Vector3.zero;
+            }
+            else
+            {
+                rigidbody.velocity = direction * GetPlayerCurrentspeed();
+            }
         }
 
         void OnMove(Vector3 value)
@@ -120,6 +128,7 @@ namespace CCB.Player
             while(t<duration)
             {
                 PlayerManager.Instance.PlayerTimeDependent.BoostComponent(GetPlayerCurrentspeed());
+                PostProManager.Instance.TransitionIn(duration);
                 t += Time.deltaTime;
                 yield return null;
             }
