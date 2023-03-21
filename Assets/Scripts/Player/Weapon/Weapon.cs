@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using CCB.Gameplay;
+using System;
 
 namespace CCB.Player
 {
@@ -21,11 +22,18 @@ namespace CCB.Player
 
         Ray aimRay;
 
+        public Action addBulletToMagazine;
+        public Action removeBulletToMagazine;
+
+        void Awake() 
+        {
+            PlayerManager.Instance.PlayerWeapon = this;
+        }
+
         void Start()
         {
             SetUpInputAction();
-
-            Reload();
+            StartCoroutine(ReloadWhenStart());
         }
 
         void SetUpInputAction()
@@ -57,14 +65,21 @@ namespace CCB.Player
             return false;
         }
 
+        IEnumerator ReloadWhenStart()
+        {
+            yield return new WaitUntil(() => addBulletToMagazine != null);
+            Reload();
+        }
+
         void Reload()
         {
             PlayerManager.Instance.playerAnimator.SetTrigger("Reload");
 
             for (var i = bulletList.Count; i < maxBullet; i++)
             {
-                BaseBullet addBullet = bulletListForRandom[Random.Range(0,bulletListForRandom.Count)];
+                BaseBullet addBullet = bulletListForRandom[UnityEngine.Random.Range(0,bulletListForRandom.Count)];
                 bulletList.Add(addBullet);
+                addBulletToMagazine?.Invoke();
             }
         }
 
@@ -88,7 +103,7 @@ namespace CCB.Player
                 StartCoroutine(WaitForNextShoot(fireRate));
                
                 ShootTarget();
-                bulletList.RemoveAt(0);
+                DiscardBullet();
                 return;
             }
            
@@ -117,6 +132,7 @@ namespace CCB.Player
 
         void DiscardBullet()
         {
+            removeBulletToMagazine();
             bulletList.RemoveAt(0);
         }
 
