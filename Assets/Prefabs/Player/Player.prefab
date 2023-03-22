@@ -166,6 +166,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1018183149182501499}
   - component: {fileID: 1018183149182501444}
+  - component: {fileID: 2062007821276537136}
   m_Layer: 0
   m_Name: Weapon
   m_TagString: Untagged
@@ -208,6 +209,20 @@ MonoBehaviour:
   maxBullet: 6
   bulletList: []
   fireRate: 1
+  _weaponVFX: {fileID: 2062007821276537136}
+--- !u!114 &2062007821276537136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1018183149182501498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bfd95700ea723448b30a85baa85378b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  VfxPrefab: {fileID: 1959126674990218, guid: b67042affc59bdf469a26afcc712c2bc, type: 3}
 --- !u!1001 &1018183147927046898
 PrefabInstance:
   m_ObjectHideFlags: 0
